@@ -480,6 +480,14 @@ namespace Schiffe_versenken
             }
             return A;
         }
+        static bool GK(int ST) // Gewinn Kontrolle
+        {
+            if (ST == 30)
+            {
+                return true;
+            }
+            return false;
+        }
         static bool AK(string[,] AF, int Zeile, int Spalte) // Attacke Kontrolle
         {
             if (AF[Zeile, Spalte] != ".| ")
@@ -488,14 +496,6 @@ namespace Schiffe_versenken
             }
 
             return true;
-        }
-        static bool GK(int ST) // Gewinn Kontrolle
-        {
-            if (ST == 30)
-            {
-                return true;
-            }
-            return false;
         }
     }
 }
