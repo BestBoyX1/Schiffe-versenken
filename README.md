@@ -1,5 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
-
 namespace Schiffe_versenken
 {
     internal class Program
@@ -7,7 +5,9 @@ namespace Schiffe_versenken
         static void Main(string[] args)
         {
             bool FE = false; // Falsche Eingabe
-            int S = 1; //Spieler 
+            int Sp = 1; //Spieler 
+            int STS1 = 0; // SChiff Treffer Spieler 1
+            int STS2 = 0; // SChiff Treffer Spieler 2
 
             string[,] S1SF = new string[11, 11];
             string[,] S2SF = new string[11, 11];
@@ -43,30 +43,111 @@ namespace Schiffe_versenken
             }
 
             // Spieler 1 Schiffe plazieren | S2=4x2 S3=3x3 S4=2x4 S5=1x5
-            S2P(S1SF,1);
-            S3P(S1SF,1);
-            S4P(S1SF,1);
-            S5P(S1SF, 1);
+            for (int j = 1; j == 4; j++)
+            {
+                S2P(S1SF, 1);
+            }
+            for (int j = 1; j == 3; j++)
+            {
+                S3P(S1SF, 1);
+            }
+            for (int j = 1; j == 2; j++)
+            {
+                S4P(S1SF, 1);
+            }
+            for (int j = 1; j == 1; j++)
+            {
+                S5P(S1SF, 1);
+            }
+
             Console.Clear();
             Console.ReadKey();
 
             // Spieler 2 Schiffe plazieren | S2=4x2 S3=3x3 S4=2x4 S5=1x5
-            S2P(S2SF, 2);
-            S3P(S2SF, 2);
-            S4P(S2SF, 2);
-            S5P(S2SF, 2);
+            for (int j = 1; j == 4; j++)
+            {
+                S2P(S2SF, 1);
+            }
+            for (int j = 1; j == 3; j++)
+            {
+                S3P(S2SF, 1);
+            }
+            for (int j = 1; j == 2; j++)
+            {
+                S4P(S2SF, 1);
+            }
+            for (int j = 1; j == 1; j++)
+            {
+                S5P(S2SF, 1);
+            }
+
             Console.Clear();
             Console.ReadKey();
 
+
             while (true)
             {
-                SF(S1SF);
-                SF(S2SF);
-                break;
+
+                // Zeile
+                Console.WriteLine("Zeile eingeben");
+                string ZStr = Console.ReadLine();
+
+                if (!int.TryParse(ZStr, out int Z))
+                {
+                    Console.WriteLine("Ungültige eingabe, versuche es nochmal!");
+                    continue;
+                }
+
+
+                // Spalte
+                Console.WriteLine("Spalte eingeben");
+                string SStr = Console.ReadLine();
+
+                if (!int.TryParse(SStr, out int S))
+                {
+                    Console.WriteLine("Ungültige eingabe, versuche es nochmal!");
+                    continue;
+                }
+                
+
+                // Hauptprogramm
+
+
+
+
+
+
+
+                // Gewinn Kontrolle
+                if (GK(STS1) == true)
+                {
+                    
+                    break;
+                }
+                else if (GK(STS2) == true)
+                {
+                    break;
+                }
+
+                // Spieler ändern
+                if (Sp == 1)
+                {
+                    Sp = 2;
+                }
+                else
+                {
+                    Sp = 1;
+                }
             }
+
+            Console.WriteLine("---- ---- ---- ----");
+            Console.WriteLine("Der Spieler " + Sp + " hat gewonnen!");
+            Console.WriteLine("Das Spiel endet jetzt!");
+            Console.WriteLine("---- ---- ---- ----");
+
         }
 
-        static string[,] SF(string[,] SF)
+        static string[,] FA(string[,] SF) // Feld Anzeigen
         {
             for (int i = 0; i < 11; i++)
             {
@@ -79,7 +160,7 @@ namespace Schiffe_versenken
             }
             return SF;
         }
-        static string[,] S2P(string[,] A, int n)
+        static string[,] S2P(string[,] A, int n) // Schiff 2 Plazieren
         {
             Console.WriteLine("---- ---- ---- ----");
             Console.WriteLine("Spieler " + n + " Plaziert das 2-er Schiff!");
@@ -89,7 +170,7 @@ namespace Schiffe_versenken
             int Z = 0;
             int S = 0;
 
-            SF(A);
+            FA(A);
 
             while (true)
             {
@@ -159,7 +240,7 @@ namespace Schiffe_versenken
             }
             return A;
         }
-        static string[,] S3P(string[,] A, int n)
+        static string[,] S3P(string[,] A, int n) // Schiff 3 Plazieren
         {
             Console.WriteLine("---- ---- ---- ----");
             Console.WriteLine("Spieler " + n + " Plaziert das 3-er Schiff!");
@@ -169,7 +250,7 @@ namespace Schiffe_versenken
             int Z = 0;
             int S = 0;
 
-            SF(A);
+            FA(A);
 
             while (true)
             {
@@ -239,7 +320,7 @@ namespace Schiffe_versenken
             }
             return A;
         }
-        static string[,] S4P(string[,] A, int n)
+        static string[,] S4P(string[,] A, int n) // Schiff 4 Plazieren
         {
             Console.WriteLine("---- ---- ---- ----");
             Console.WriteLine("Spieler " + n + " Plaziert das 3-er Schiff!");
@@ -249,7 +330,7 @@ namespace Schiffe_versenken
             int Z = 0;
             int S = 0;
 
-            SF(A);
+            FA(A);
 
             while (true)
             {
@@ -319,7 +400,7 @@ namespace Schiffe_versenken
             }
             return A;
         }
-        static string[,] S5P(string[,] A, int n)
+        static string[,] S5P(string[,] A, int n) // Schiff 5 Plazieren
         {
             Console.WriteLine("---- ---- ---- ----");
             Console.WriteLine("Spieler " + n + " Plaziert das 4-er Schiff!");
@@ -329,7 +410,7 @@ namespace Schiffe_versenken
             int Z = 0;
             int S = 0;
 
-            SF(A);
+            FA(A);
 
             while (true)
             {
@@ -398,6 +479,23 @@ namespace Schiffe_versenken
                 break;
             }
             return A;
+        }
+        static bool AK(string[,] AF, int Zeile, int Spalte) // Attacke Kontrolle
+        {
+            if (AF[Zeile, Spalte] != ".| ")
+            {
+                return false;
+            }
+
+            return true;
+        }
+        static bool GK(int ST) // Gewinn Kontrolle
+        {
+            if (ST == 30)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
